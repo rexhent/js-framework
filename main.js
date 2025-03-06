@@ -49,7 +49,7 @@ addCss(`
 
 
 function createButton(text, id, onClick, styles) {
-    const button = document.createElement('button');
+    const button = document.createElement('button');    
     button.textContent = text
     button.style.padding = '10px 20px';
     button.style.fontSize = '16px';
@@ -64,7 +64,25 @@ function createButton(text, id, onClick, styles) {
     }
 }
 
+function createHtmlElement(elementTag, id, content, styles) {
+    const element = document.createElement(`${elementTag}`)
+    element.innerHTML = content
+    addStyles(element, styles)
+    const container = document.getElementById(`${id}`);
+    if (container) {
+        container.appendChild(element);
+    } else {
+        console.error('Container with id "app" not found');
+    }
+    return element
+}
+
 // Example usage
 createButton('Click Me!', "app", () => alert('Button clicked!'), "inter-400");
 
 createButton("hello", "btn2", () => {},"inter-800")
+
+myName = "name"
+hello = createHtmlElement("h1", "app",`<i>Hello ${myName}!!!</i>`)
+hello.textContent = "hi"
+hello.addEventListener('click', console.log("hi"))
