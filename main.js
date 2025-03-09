@@ -72,9 +72,11 @@ addCss(`
 // }
 
 function createButton(text, id, onClick, classes) {
-    const button = createHtmlElement('button', id, text, classes, { padding: '10px 20px', fontSize: '16px'});    
+    const button = createHtmlElement('button', id, text, classes, { padding: '10px 20px', fontSize: '16px', backgroundColor: `#4CAF50`, color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'});    
     button.addEventListener('click', onClick);
 }
+
+
 
 function createHtmlElement(elementTag, id, content, classes, styles) {
     const element = document.createElement(`${elementTag}`)
