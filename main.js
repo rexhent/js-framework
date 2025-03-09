@@ -1,24 +1,33 @@
-
+/**
+ * Adds a CSS style block to the document head.
+ * @param {string} css - The CSS rules as a string.
+ */
 function addCss(css) {
     const styleElement = document.createElement('style');
     styleElement.textContent = css;
     document.head.appendChild(styleElement);
 }
+
+/**
+ * Adds CSS class names to the specified HTML element.
+ * @param {HTMLElement} element - The target HTML element.
+ * @param {string[]} styles - An array of class names to add to the element.
+ */
 function addStyles(element, styles) {
-    // console.log(styles)
     for (let i = 0; i < styles.length; i++) {
-        // console.log(i, styles, styles[i])
-        element.classList.add(`${styles[i]}`)
+        element.classList.add(`${styles[i]}`);
     }
 }
 
+/**
+ * Loads the Inter font from Google Fonts and dynamically generates weight-based CSS classes.
+ */
 function addInterFont() {
     addCss(`
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-    `)
+    `);
     for (let i = 1; i < 10; i++) {
-        // console.log(i)
-        weight = `${i}00`
+        const weight = `${i}00`;
         addCss(`
             .inter-${weight} {
             font-family: "Inter", sans-serif;
@@ -26,86 +35,74 @@ function addInterFont() {
             font-weight: ${weight};
             font-style: normal;
         }
-        `)
-        
+        `);
     }
 }
 
-addInterFont()
+// Automatically add the Inter font styles
+addInterFont();
 
-// Example usage
-addCss(`
-    #app button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px 24px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #app button:hover {
-        background-color: #45a049;
-    }
-    .green {
-        color: green;
-    }
-    
-`);
-
-
-// function createButton(text, id, onClick, styles) {
-//     const button = document.createElement('button');    
-//     button.textContent = text
-//     button.style.padding = '10px 20px';
-//     button.style.fontSize = '16px';
-//     addStyles(button, styles)
-//     button.addEventListener('click', onClick);
-
-//     const container = document.getElementById(`${id}`);
-//     if (container) {
-//         container.appendChild(button);
-//     } else {
-//         console.error('Container with id "app" not found');
-//     }
-// }
-
+/**
+ * Creates a button element and appends it to the specified container.
+ * @param {string} text - The text content of the button.
+ * @param {string} id - The ID of the container where the button will be appended.
+ * @param {Function} onClick - The callback function to execute on button click.
+ * @param {string[]} classes - An array of CSS class names to add to the button.
+ */
 function createButton(text, id, onClick, classes) {
-    const button = createHtmlElement('button', id, text, classes, { padding: '10px 20px', fontSize: '16px', backgroundColor: `#4CAF50`, color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'});    
+    const button = createHtmlElement('button', id, text, classes, { 
+        padding: '10px 20px', 
+        fontSize: '16px', 
+        backgroundColor: '#4CAF50', 
+        color: 'white', 
+        border: 'none', 
+        borderRadius: '4px', 
+        cursor: 'pointer'
+    });
     button.addEventListener('click', onClick);
 }
 
-
-
+/**
+ * Creates an HTML element, applies styles and classes, and appends it to the specified container.
+ * @param {string} elementTag - The tag name of the HTML element to create (e.g., "div", "h1").
+ * @param {string} id - The ID of the container where the element will be appended.
+ * @param {string} content - The inner HTML content of the element.
+ * @param {string[]} classes - An array of CSS class names to add to the element.
+ * @param {Object} styles - An object containing CSS property-value pairs to apply to the element.
+ * @returns {HTMLElement} The created HTML element.
+ */
 function createHtmlElement(elementTag, id, content, classes, styles) {
-    const element = document.createElement(`${elementTag}`)
-    element.innerHTML = content
+    const element = document.createElement(`${elementTag}`);
+    element.innerHTML = content;
     if (styles) {
         for (const property in styles) {
-            console.log(property, element[property], styles[property])
-            element.style[property] = styles[property]
-            // element.styles[i][0] = element.styles[i][1]
+            console.log(property, element[property], styles[property]);
+            element.style[property] = styles[property];
         }
     }
-    addStyles(element, classes)
+    addStyles(element, classes);
     const container = document.getElementById(`${id}`);
     if (container) {
         container.appendChild(element);
     } else {
-        console.error('Container with id "app" not found');
+        console.error(`Container with id "${id}" not found`);
     }
-    return element
+    return element;
 }
 
 // Example usage
 createButton('Click Me!', "app", () => alert('Button clicked!'), ["inter-400"]);
 
-createButton("hello", "btn2", () => {},["inter-800"])
+createButton("hello", "btn2", () => {}, ["inter-800"]);
 
-
-/** @param {string} myName */
-myName = "name"
-hello = createHtmlElement("h1", "app",`<i>Hello ${myName}!!!</i>`, ["green", "inter-400"], {fontSize: '48px', padding: "20px"})
-hello.textContent = "hi"
-hello.addEventListener('click', console.log("hi"))
+/**
+ * Example usage: Creates an <h1> element with dynamic content.
+ * @type {string}
+ */
+const myName = "name";
+const hello = createHtmlElement("h1", "app", `<i>Hello ${myName}!!!</i>`, ["green", "inter-400"], { 
+    fontSize: '48px', 
+    padding: "20px" 
+});
+hello.textContent = "hi";
+hello.addEventListener('click', () => console.log("hi"));
