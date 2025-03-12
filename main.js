@@ -7,6 +7,9 @@ function addCss(css) {
     styleElement.textContent = css;
     document.head.appendChild(styleElement);
 }
+addCss(`.mr-2 {
+    margin-right: 5px;
+    }`)
 
 /**
  * Adds CSS class names to the specified HTML element.
@@ -39,6 +42,10 @@ function addInterFont() {
     }
 }
 
+// function setReactive(element, value) {
+//     element.textContent 
+// }
+
 // Automatically add the Inter font styles
 addInterFont();
 
@@ -57,10 +64,12 @@ function createButton(text, id, onClick, classes) {
         color: 'white', 
         border: 'none', 
         borderRadius: '4px', 
-        cursor: 'pointer'
+        cursor: 'pointer',
     });
     button.addEventListener('click', onClick);
+    return button
 }
+
 
 /**
  * Creates an HTML element, applies styles and classes, and appends it to the specified container.
@@ -91,7 +100,16 @@ function createHtmlElement(elementTag, id, content, classes, styles) {
 }
 
 // Example usage
-createButton('Click Me!', "app", () => alert('Button clicked!'), ["inter-400"]);
+/**
+ * @type {number}
+ */
+let buttonValue = 0
+
+const increment = createButton('+', "app", () => {buttonValue++; reset.textContent = buttonValue}, ["inter-400", "mr-2"]);
+const reset = createButton(`${buttonValue}`, "app", () => {buttonValue = 0; reset.textContent = buttonValue}, ["inter-400", "mr-2"]);
+const decrement = createButton('-', "app", () => {buttonValue--; reset.textContent = buttonValue}, ["inter-400", "mr-2"]);
+
+
 
 createButton("hello", "btn2", () => {}, ["inter-800"]);
 
@@ -102,7 +120,15 @@ createButton("hello", "btn2", () => {}, ["inter-800"]);
 const myName = "name";
 const hello = createHtmlElement("h1", "app", `<i>Hello ${myName}!!!</i>`, ["green", "inter-400"], { 
     fontSize: '48px', 
-    padding: "20px" 
+    padding: "20px"
 });
 hello.textContent = "hi";
-hello.addEventListener('click', () => console.log("hi"));
+/** 
+* value var 
+* @type {number}
+*/
+
+let value = 0
+hello.addEventListener('click', () => {value++; hello.textContent = value});
+
+
